@@ -1,28 +1,28 @@
-const mongoose = require("mongoose");
-const supertest = require("supertest");
-const validator = require("validator");
-const app = require("../routes/app");
+const mongoose = require('mongoose');
+const supertest = require('supertest');
+const validator = require('validator');
+const app = require('../routes/app');
 
 const request = supertest(app);
 
 const mockUser = {
-  email: "test@gmail.com",
-  password: "12345678",
-  name: "Test",
+  email: 'test@gmail.com',
+  password: '12345678',
+  name: 'Test',
 };
 const mockArticle = {
-  keyword: "test",
-  title: "How to test",
-  text: "lorem ipsom",
-  date: "10-11-2022",
-  source: "The Onion",
-  link: "https://www.theonion.com/",
+  keyword: 'test',
+  title: 'How to test',
+  text: 'lorem ipsom',
+  date: '10-11-2022',
+  source: 'The Onion',
+  link: 'https://www.theonion.com/',
   image:
-    "https://m.media-amazon.com/images/M/MV5BNDdkMDUxMmUtNWQ1Yi00OWY3LWI2ZDktOTBmNzVkMTAwODM5XkEyXkFqcGdeQXVyMTY5Nzc4MDY@._V1_.jpg",
+    'https://m.media-amazon.com/images/M/MV5BNDdkMDUxMmUtNWQ1Yi00OWY3LWI2ZDktOTBmNzVkMTAwODM5XkEyXkFqcGdeQXVyMTY5Nzc4MDY@._V1_.jpg',
 };
 
 beforeAll(async () => {
-  await mongoose.connect("mongodb://localhost:27017/mockdb");
+  await mongoose.connect('mongodb://localhost:27017/mockdb');
 });
 
 afterAll((done) => {
@@ -32,15 +32,15 @@ afterAll((done) => {
   });
 });
 
-describe("Test valid requests", () => {
+describe('Test valid requests', () => {
   let articleId;
   let token;
 
-  it("Should create a new user", (done) => {
+  it('Should create a new user', (done) => {
     request
-      .post("/signup")
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json")
+      .post('/signup')
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
       .send(mockUser)
       .then((res) => {
         expect(res.status).toBe(200);
@@ -52,11 +52,11 @@ describe("Test valid requests", () => {
         done();
       });
   });
-  it("Should check email and password, and return JWT", (done) => {
+  it('Should check email and password, and return JWT', (done) => {
     request
-      .post("/signin")
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json")
+      .post('/signin')
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
       .send({ email: mockUser.email, password: mockUser.password })
       .then((res) => {
         const data = JSON.parse(res.text);
@@ -66,10 +66,10 @@ describe("Test valid requests", () => {
         done();
       });
   });
-  it("Should return the logged user info", (done) => {
+  it('Should return the logged user info', (done) => {
     request
-      .get("/users/me")
-      .set("Authorization", `Bearer ${token}`)
+      .get('/users/me')
+      .set('Authorization', `Bearer ${token}`)
       .then((res) => {
         expect(res.status).toBe(200);
         const data = JSON.parse(res.text);
@@ -81,12 +81,12 @@ describe("Test valid requests", () => {
         done();
       });
   });
-  it("Should create a new article", (done) => {
+  it('Should create a new article', (done) => {
     request
-      .post("/articles")
-      .set("Content-Type", "application/json")
-      .set("Accept", "application/json")
-      .set("Authorization", `Bearer ${token}`)
+      .post('/articles')
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .send(mockArticle)
       .then((res) => {
         expect(res.status).toBe(200);
@@ -95,10 +95,10 @@ describe("Test valid requests", () => {
         done();
       });
   });
-  it("Should return the articles saved by the user", (done) => {
+  it('Should return the articles saved by the user', (done) => {
     request
-      .get("/articles")
-      .set("Authorization", `Bearer ${token}`)
+      .get('/articles')
+      .set('Authorization', `Bearer ${token}`)
       .then((res) => {
         expect(res.status).toBe(200);
         const data = JSON.parse(res.text);
@@ -107,10 +107,10 @@ describe("Test valid requests", () => {
         done();
       });
   });
-  it("Should delete the article with the given ObjectID", (done) => {
+  it('Should delete the article with the given ObjectID', (done) => {
     request
       .delete(`/articles/${articleId}`)
-      .set("Authorization", `Bearer ${token}`)
+      .set('Authorization', `Bearer ${token}`)
       .then((res) => {
         expect(res.status).toBe(200);
         const data = JSON.parse(res.text);
