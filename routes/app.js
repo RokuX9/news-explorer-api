@@ -22,7 +22,7 @@ app.use("/signin", loginRoute);
 app.use("/signup", registerRoute);
 app.use(auth);
 app.use("/users", usersRoute);
-app.use("/article", articlesRoute);
+app.use("/articles", articlesRoute);
 
 app.use(errorLogger);
 app.use(errors());

@@ -83,7 +83,7 @@ describe("Test valid requests", () => {
   });
   it("Should create a new article", (done) => {
     request
-      .post("/article")
+      .post("/articles")
       .set("Content-Type", "application/json")
       .set("Accept", "application/json")
       .set("Authorization", `Bearer ${token}`)
@@ -97,7 +97,7 @@ describe("Test valid requests", () => {
   });
   it("Should return the articles saved by the user", (done) => {
     request
-      .get("/article")
+      .get("/articles")
       .set("Authorization", `Bearer ${token}`)
       .then((res) => {
         expect(res.status).toBe(200);
@@ -109,7 +109,7 @@ describe("Test valid requests", () => {
   });
   it("Should delete the article with the given ObjectID", (done) => {
     request
-      .delete(`/article/${articleId}`)
+      .delete(`/articles/${articleId}`)
       .set("Authorization", `Bearer ${token}`)
       .then((res) => {
         expect(res.status).toBe(200);
