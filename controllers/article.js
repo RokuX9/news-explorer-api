@@ -1,5 +1,5 @@
-const Article = require("../models/article.js");
-const { customErrors } = require("../utils/utils.js");
+const Article = require('../models/article');
+const { customErrors } = require('../utils/utils');
 
 module.exports.getArticles = (req, res, next) => {
   const { _id } = req.user;
@@ -9,7 +9,7 @@ module.exports.getArticles = (req, res, next) => {
       res.status(200).send(articles);
     })
     .catch((err) => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         next(customErrors.badRequest(err.message));
       }
       next(err);
@@ -18,7 +18,9 @@ module.exports.getArticles = (req, res, next) => {
 
 module.exports.postArticle = (req, res, next) => {
   const { _id } = req.user;
-  const { keyword, title, text, date, source, link, image } = req.body;
+  const {
+    keyword, title, text, date, source, link, image,
+  } = req.body;
   Article.create({
     keyword,
     title,
@@ -49,7 +51,7 @@ module.exports.deleteArticle = (req, res, next) => {
       res.status(200).send(data);
     })
     .catch((err) => {
-      if (err.name === "CastError") {
+      if (err.name === 'CastError') {
         next(customErrors.badRequest(err.message));
       }
       next(err);

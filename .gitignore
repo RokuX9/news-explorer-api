@@ -1,4 +1,3 @@
 node_modules
 logs
-.editorconfig
-.eslintrc
+.env

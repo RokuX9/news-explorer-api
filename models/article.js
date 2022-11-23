@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcrypt");
-const { customErrors } = require("../utils/utils.js");
+const mongoose = require('mongoose');
+const validator = require('validator');
+const { customErrors } = require('../utils/utils');
 
 const articleSchema = mongoose.Schema({
   keyword: { type: String, required: true },
@@ -29,15 +28,12 @@ const articleSchema = mongoose.Schema({
   },
   owner: { type: mongoose.Types.ObjectId, required: true, select: false },
 });
-articleSchema.statics.deleteArticleByOwnerAndId =
-  function deleteArticleByOwnerAndId(id, owner) {
-    return this.findById({ _id: id })
-      .select("+owner")
-      .orFail(customErrors.notFound())
-      .then((article) =>
-        article.owner.toString() === owner
-          ? this.findByIdAndDelete(id)
-          : Promise.reject(customErrors.forbidden())
-      );
-  };
-module.exports = mongoose.model("article", articleSchema);
+articleSchema.statics.deleteArticleByOwnerAndId = function deleteArticleByOwnerAndId(id, owner) {
+  return this.findById({ _id: id })
+    .select('+owner')
+    .orFail(customErrors.notFound())
+    .then((article) => (article.owner.toString() === owner
+      ? this.findByIdAndDelete(id)
+      : Promise.reject(customErrors.forbidden())));
+};
+module.exports = mongoose.model('article', articleSchema);

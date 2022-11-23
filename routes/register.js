@@ -1,9 +1,9 @@
-const router = require("express").Router();
-const { celebrate, Joi } = require("celebrate");
-const { register } = require("../controllers/user.js");
+const router = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
+const { register } = require('../controllers/user');
 
 router.post(
-  "/",
+  '/',
   celebrate({
     body: Joi.object().keys({
       name: Joi.string().min(2).max(30).required(),
@@ -11,7 +11,7 @@ router.post(
       password: Joi.string().required(),
     }),
   }),
-  register
+  register,
 );
 
 module.exports = router;

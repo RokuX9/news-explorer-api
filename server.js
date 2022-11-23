@@ -1,8 +1,8 @@
-const app = require("./routes/app.js");
 const mongoose = require("mongoose");
+const app = require("./routes/app");
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DBURL } = process.env;
 
-mongoose.connect("mongodb://localhost:27017/news-explorer");
+mongoose.connect(DBURL);
 
 app.listen(PORT);

@@ -1,17 +1,16 @@
-const { JsonWebTokenError } = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const validator = require("validator");
-const app = require("../routes/app.js");
+const app = require("../routes/app");
 
 const request = supertest(app);
 
-let mockUser = {
+const mockUser = {
   email: "test@gmail.com",
   password: "12345678",
   name: "Test",
 };
-let mockArticle = {
+const mockArticle = {
   keyword: "test",
   title: "How to test",
   text: "lorem ipsom",
@@ -35,7 +34,6 @@ afterAll((done) => {
 
 describe("Test valid requests", () => {
   let articleId;
-  let userId;
   let token;
 
   it("Should create a new user", (done) => {
@@ -47,7 +45,6 @@ describe("Test valid requests", () => {
       .then((res) => {
         expect(res.status).toBe(200);
         const data = JSON.parse(res.text);
-        userId = data._id;
         expect(data).toMatchObject({
           email: mockUser.email,
           name: mockUser.name,
@@ -112,7 +109,7 @@ describe("Test valid requests", () => {
   });
   it("Should delete the article with the given ObjectID", (done) => {
     request
-      .delete("/article/" + articleId)
+      .delete(`/article/${articleId}`)
       .set("Authorization", `Bearer ${token}`)
       .then((res) => {
         expect(res.status).toBe(200);

@@ -5,27 +5,27 @@ module.exports.customErrors = {
     return error;
   },
   notAuthorized: () => {
-    const error = new Error("Not Authorized");
+    const error = new Error('Not Authorized');
     error.code = 401;
     return error;
   },
   forbidden: () => {
-    const error = new Error("Forbidden");
+    const error = new Error('Forbidden');
     error.code = 403;
     return error;
   },
   notFound: () => {
-    const error = new Error("Not Found");
+    const error = new Error('Not Found');
     error.code = 404;
     return error;
   },
   alreadyExist: () => {
-    const error = new Error("Already Exist");
+    const error = new Error('Already Exist');
     error.code = 409;
     return error;
   },
   serverError: () => {
-    const error = new Error("Server Error");
+    const error = new Error('Server Error');
     error.code = 500;
   },
 };
