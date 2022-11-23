@@ -38,7 +38,7 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
       bcrypt
         .compare(password, user.password)
         .then((matched) =>
-          matched ? user : Promise.reject(customErrors.notFound())
+          matched ? user : Promise.reject(customErrors.notAuthorized())
         )
     );
 };
